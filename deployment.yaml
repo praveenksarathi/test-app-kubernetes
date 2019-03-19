@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-deployment
+  labels:
+    app: praveen-data
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: praveen-data
+  template:
+    metadata:
+      labels:
+        app: praveen-data
+    spec:
+      containers:
+      - name: praveen-data
+        image: python_app
+        ports:
+        - containerPort: 5000
