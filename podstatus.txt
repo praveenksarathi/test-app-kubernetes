@@ -1,0 +1,12 @@
+NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
+kube-system   calico-kube-controllers-5cbcccc885-px9ml   1/1     Running   0          3m41s
+kube-system   calico-node-9mwz4                          1/1     Running   0          2m41s
+kube-system   calico-node-j4l4k                          1/1     Running   0          3m41s
+kube-system   coredns-fb8b8dccf-n9l6q                    1/1     Running   0          5m55s
+kube-system   coredns-fb8b8dccf-zjz94                    1/1     Running   0          5m55s
+kube-system   etcd-kube-master                           1/1     Running   0          4m54s
+kube-system   kube-apiserver-kube-master                 1/1     Running   0          4m56s
+kube-system   kube-controller-manager-kube-master        1/1     Running   0          5m3s
+kube-system   kube-proxy-n8sx6                           1/1     Running   0          2m41s
+kube-system   kube-proxy-wrgbf                           1/1     Running   0          5m55s
+kube-system   kube-scheduler-kube-master                 1/1     Running   0          4m50s

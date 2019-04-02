@@ -1,0 +1,1014 @@
+Name:               calico-kube-controllers-5cbcccc885-px9ml
+Namespace:          kube-system
+Priority:           0
+PriorityClassName:  <none>
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:31:19 +0000
+Labels:             k8s-app=calico-kube-controllers
+                    pod-template-hash=5cbcccc885
+Annotations:        cni.projectcalico.org/podIP: 192.168.221.193/32
+Status:             Running
+IP:                 192.168.221.193
+Controlled By:      ReplicaSet/calico-kube-controllers-5cbcccc885
+Containers:
+  calico-kube-controllers:
+    Container ID:   docker://6595c2dc35cea2f2ee53a33abd4169cdcc2d2417d67de1f27c631f4ef86caeef
+    Image:          calico/kube-controllers:v3.6.1
+    Image ID:       docker-pullable://calico/kube-controllers@sha256:d2c50234ab5db7a9ec2b4e63123cb87e85ab3f7f1571f6d310de08ebe87dac2c
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:31:22 +0000
+    Ready:          True
+    Restart Count:  0
+    Readiness:      exec [/usr/bin/check-status -r] delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      ENABLED_CONTROLLERS:  node
+      DATASTORE_TYPE:       kubernetes
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-kube-controllers-token-62nmt (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  calico-kube-controllers-token-62nmt:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  calico-kube-controllers-token-62nmt
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  beta.kubernetes.io/os=linux
+Tolerations:     CriticalAddonsOnly
+                 node-role.kubernetes.io/master:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason            Age                   From                  Message
+  ----     ------            ----                  ----                  -------
+  Warning  FailedScheduling  2m51s (x5 over 3m2s)  default-scheduler     0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Normal   Scheduled         2m41s                 default-scheduler     Successfully assigned kube-system/calico-kube-controllers-5cbcccc885-px9ml to kube-master
+  Normal   Pulling           2m40s                 kubelet, kube-master  Pulling image "calico/kube-controllers:v3.6.1"
+  Normal   Pulled            2m39s                 kubelet, kube-master  Successfully pulled image "calico/kube-controllers:v3.6.1"
+  Normal   Created           2m38s                 kubelet, kube-master  Created container calico-kube-controllers
+  Normal   Started           2m38s                 kubelet, kube-master  Started container calico-kube-controllers
+
+
+Name:               calico-node-9mwz4
+Namespace:          kube-system
+Priority:           0
+PriorityClassName:  <none>
+Node:               kube-slave/10.142.0.15
+Start Time:         Tue, 02 Apr 2019 17:31:58 +0000
+Labels:             controller-revision-hash=746b5678b
+                    k8s-app=calico-node
+                    pod-template-generation=1
+Annotations:        scheduler.alpha.kubernetes.io/critical-pod: 
+Status:             Running
+IP:                 10.142.0.15
+Controlled By:      DaemonSet/calico-node
+Init Containers:
+  upgrade-ipam:
+    Container ID:  docker://66bce57826717a9160741ef2e26fd875b45725deccf1753e955bf5a15e024294
+    Image:         calico/cni:v3.6.1
+    Image ID:      docker-pullable://calico/cni@sha256:285b8409910c72d410807a346c339a203ecbc38c39333567666066bc167a4b82
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /opt/cni/bin/calico-ipam
+      -upgrade
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Tue, 02 Apr 2019 17:32:05 +0000
+      Finished:     Tue, 02 Apr 2019 17:32:05 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      KUBERNETES_NODE_NAME:        (v1:spec.nodeName)
+      CALICO_NETWORKING_BACKEND:  <set to the key 'calico_backend' of config map 'calico-config'>  Optional: false
+    Mounts:
+      /host/opt/cni/bin from cni-bin-dir (rw)
+      /var/lib/cni/networks from host-local-net-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-node-token-5r6m2 (ro)
+  install-cni:
+    Container ID:  docker://dd66e667bea31ad5583d7c55a447ea06fd6a026775016a3d7388a2e7659567c4
+    Image:         calico/cni:v3.6.1
+    Image ID:      docker-pullable://calico/cni@sha256:285b8409910c72d410807a346c339a203ecbc38c39333567666066bc167a4b82
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /install-cni.sh
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Tue, 02 Apr 2019 17:32:06 +0000
+      Finished:     Tue, 02 Apr 2019 17:32:06 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      CNI_CONF_NAME:         10-calico.conflist
+      CNI_NETWORK_CONFIG:    <set to the key 'cni_network_config' of config map 'calico-config'>  Optional: false
+      KUBERNETES_NODE_NAME:   (v1:spec.nodeName)
+      CNI_MTU:               <set to the key 'veth_mtu' of config map 'calico-config'>  Optional: false
+      SLEEP:                 false
+    Mounts:
+      /host/etc/cni/net.d from cni-net-dir (rw)
+      /host/opt/cni/bin from cni-bin-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-node-token-5r6m2 (ro)
+Containers:
+  calico-node:
+    Container ID:   docker://bdcfc3b3b0fd9976734600a68fb255b18b1745b51d6565876a052c0d0a51fc58
+    Image:          calico/node:v3.6.1
+    Image ID:       docker-pullable://calico/node@sha256:8483357e5e8226f9bcf340106ec50294dfa162bf56e95ea3fba5bc21de8e114f
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:32:10 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      250m
+    Liveness:   http-get http://localhost:9099/liveness delay=10s timeout=1s period=10s #success=1 #failure=6
+    Readiness:  exec [/bin/calico-node -bird-ready -felix-ready] delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      DATASTORE_TYPE:                     kubernetes
+      WAIT_FOR_DATASTORE:                 true
+      NODENAME:                            (v1:spec.nodeName)
+      CALICO_NETWORKING_BACKEND:          <set to the key 'calico_backend' of config map 'calico-config'>  Optional: false
+      CLUSTER_TYPE:                       k8s,bgp
+      IP:                                 autodetect
+      CALICO_IPV4POOL_IPIP:               Always
+      FELIX_IPINIPMTU:                    <set to the key 'veth_mtu' of config map 'calico-config'>  Optional: false
+      CALICO_IPV4POOL_CIDR:               192.168.0.0/16
+      CALICO_DISABLE_FILE_LOGGING:        true
+      FELIX_DEFAULTENDPOINTTOHOSTACTION:  ACCEPT
+      FELIX_IPV6SUPPORT:                  false
+      FELIX_LOGSEVERITYSCREEN:            info
+      FELIX_HEALTHENABLED:                true
+    Mounts:
+      /lib/modules from lib-modules (ro)
+      /run/xtables.lock from xtables-lock (rw)
+      /var/lib/calico from var-lib-calico (rw)
+      /var/run/calico from var-run-calico (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-node-token-5r6m2 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  lib-modules:
+    Type:          HostPath (bare host directory volume)
+    Path:          /lib/modules
+    HostPathType:  
+  var-run-calico:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/run/calico
+    HostPathType:  
+  var-lib-calico:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/calico
+    HostPathType:  
+  xtables-lock:
+    Type:          HostPath (bare host directory volume)
+    Path:          /run/xtables.lock
+    HostPathType:  FileOrCreate
+  cni-bin-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /opt/cni/bin
+    HostPathType:  
+  cni-net-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/cni/net.d
+    HostPathType:  
+  host-local-net-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/cni/networks
+    HostPathType:  
+  calico-node-token-5r6m2:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  calico-node-token-5r6m2
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  beta.kubernetes.io/os=linux
+Tolerations:     :NoSchedule
+                 :NoExecute
+                 CriticalAddonsOnly
+                 node.kubernetes.io/disk-pressure:NoSchedule
+                 node.kubernetes.io/memory-pressure:NoSchedule
+                 node.kubernetes.io/network-unavailable:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute
+                 node.kubernetes.io/pid-pressure:NoSchedule
+                 node.kubernetes.io/unreachable:NoExecute
+                 node.kubernetes.io/unschedulable:NoSchedule
+Events:
+  Type    Reason     Age   From                 Message
+  ----    ------     ----  ----                 -------
+  Normal  Scheduled  2m2s  default-scheduler    Successfully assigned kube-system/calico-node-9mwz4 to kube-slave
+  Normal  Pulling    2m1s  kubelet, kube-slave  Pulling image "calico/cni:v3.6.1"
+  Normal  Pulled     116s  kubelet, kube-slave  Successfully pulled image "calico/cni:v3.6.1"
+  Normal  Created    115s  kubelet, kube-slave  Created container upgrade-ipam
+  Normal  Started    115s  kubelet, kube-slave  Started container upgrade-ipam
+  Normal  Pulled     114s  kubelet, kube-slave  Container image "calico/cni:v3.6.1" already present on machine
+  Normal  Created    114s  kubelet, kube-slave  Created container install-cni
+  Normal  Started    114s  kubelet, kube-slave  Started container install-cni
+  Normal  Pulling    113s  kubelet, kube-slave  Pulling image "calico/node:v3.6.1"
+  Normal  Pulled     111s  kubelet, kube-slave  Successfully pulled image "calico/node:v3.6.1"
+  Normal  Created    110s  kubelet, kube-slave  Created container calico-node
+  Normal  Started    110s  kubelet, kube-slave  Started container calico-node
+
+
+Name:               calico-node-j4l4k
+Namespace:          kube-system
+Priority:           0
+PriorityClassName:  <none>
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:30:58 +0000
+Labels:             controller-revision-hash=746b5678b
+                    k8s-app=calico-node
+                    pod-template-generation=1
+Annotations:        scheduler.alpha.kubernetes.io/critical-pod: 
+Status:             Running
+IP:                 10.142.0.14
+Controlled By:      DaemonSet/calico-node
+Init Containers:
+  upgrade-ipam:
+    Container ID:  docker://ef05052eb45c9ec33cb25304768dbf1a348808255a48f198dff72a1ea09aa0ef
+    Image:         calico/cni:v3.6.1
+    Image ID:      docker-pullable://calico/cni@sha256:285b8409910c72d410807a346c339a203ecbc38c39333567666066bc167a4b82
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /opt/cni/bin/calico-ipam
+      -upgrade
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Tue, 02 Apr 2019 17:31:03 +0000
+      Finished:     Tue, 02 Apr 2019 17:31:03 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      KUBERNETES_NODE_NAME:        (v1:spec.nodeName)
+      CALICO_NETWORKING_BACKEND:  <set to the key 'calico_backend' of config map 'calico-config'>  Optional: false
+    Mounts:
+      /host/opt/cni/bin from cni-bin-dir (rw)
+      /var/lib/cni/networks from host-local-net-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-node-token-5r6m2 (ro)
+  install-cni:
+    Container ID:  docker://4df757f3845a924bfea741b3a465d18efad241012ebcaebcb0f22c49d6730148
+    Image:         calico/cni:v3.6.1
+    Image ID:      docker-pullable://calico/cni@sha256:285b8409910c72d410807a346c339a203ecbc38c39333567666066bc167a4b82
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /install-cni.sh
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Tue, 02 Apr 2019 17:31:04 +0000
+      Finished:     Tue, 02 Apr 2019 17:31:04 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      CNI_CONF_NAME:         10-calico.conflist
+      CNI_NETWORK_CONFIG:    <set to the key 'cni_network_config' of config map 'calico-config'>  Optional: false
+      KUBERNETES_NODE_NAME:   (v1:spec.nodeName)
+      CNI_MTU:               <set to the key 'veth_mtu' of config map 'calico-config'>  Optional: false
+      SLEEP:                 false
+    Mounts:
+      /host/etc/cni/net.d from cni-net-dir (rw)
+      /host/opt/cni/bin from cni-bin-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-node-token-5r6m2 (ro)
+Containers:
+  calico-node:
+    Container ID:   docker://1ea517067a4128419b4dff2972284698a65f22203243eebd4a3f85094460bdac
+    Image:          calico/node:v3.6.1
+    Image ID:       docker-pullable://calico/node@sha256:8483357e5e8226f9bcf340106ec50294dfa162bf56e95ea3fba5bc21de8e114f
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:31:08 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      250m
+    Liveness:   http-get http://localhost:9099/liveness delay=10s timeout=1s period=10s #success=1 #failure=6
+    Readiness:  exec [/bin/calico-node -bird-ready -felix-ready] delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      DATASTORE_TYPE:                     kubernetes
+      WAIT_FOR_DATASTORE:                 true
+      NODENAME:                            (v1:spec.nodeName)
+      CALICO_NETWORKING_BACKEND:          <set to the key 'calico_backend' of config map 'calico-config'>  Optional: false
+      CLUSTER_TYPE:                       k8s,bgp
+      IP:                                 autodetect
+      CALICO_IPV4POOL_IPIP:               Always
+      FELIX_IPINIPMTU:                    <set to the key 'veth_mtu' of config map 'calico-config'>  Optional: false
+      CALICO_IPV4POOL_CIDR:               192.168.0.0/16
+      CALICO_DISABLE_FILE_LOGGING:        true
+      FELIX_DEFAULTENDPOINTTOHOSTACTION:  ACCEPT
+      FELIX_IPV6SUPPORT:                  false
+      FELIX_LOGSEVERITYSCREEN:            info
+      FELIX_HEALTHENABLED:                true
+    Mounts:
+      /lib/modules from lib-modules (ro)
+      /run/xtables.lock from xtables-lock (rw)
+      /var/lib/calico from var-lib-calico (rw)
+      /var/run/calico from var-run-calico (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from calico-node-token-5r6m2 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  lib-modules:
+    Type:          HostPath (bare host directory volume)
+    Path:          /lib/modules
+    HostPathType:  
+  var-run-calico:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/run/calico
+    HostPathType:  
+  var-lib-calico:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/calico
+    HostPathType:  
+  xtables-lock:
+    Type:          HostPath (bare host directory volume)
+    Path:          /run/xtables.lock
+    HostPathType:  FileOrCreate
+  cni-bin-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /opt/cni/bin
+    HostPathType:  
+  cni-net-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/cni/net.d
+    HostPathType:  
+  host-local-net-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/cni/networks
+    HostPathType:  
+  calico-node-token-5r6m2:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  calico-node-token-5r6m2
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  beta.kubernetes.io/os=linux
+Tolerations:     :NoSchedule
+                 :NoExecute
+                 CriticalAddonsOnly
+                 node.kubernetes.io/disk-pressure:NoSchedule
+                 node.kubernetes.io/memory-pressure:NoSchedule
+                 node.kubernetes.io/network-unavailable:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute
+                 node.kubernetes.io/pid-pressure:NoSchedule
+                 node.kubernetes.io/unreachable:NoExecute
+                 node.kubernetes.io/unschedulable:NoSchedule
+Events:
+  Type     Reason     Age    From                  Message
+  ----     ------     ----   ----                  -------
+  Normal   Scheduled  3m2s   default-scheduler     Successfully assigned kube-system/calico-node-j4l4k to kube-master
+  Normal   Pulling    3m     kubelet, kube-master  Pulling image "calico/cni:v3.6.1"
+  Normal   Pulled     2m58s  kubelet, kube-master  Successfully pulled image "calico/cni:v3.6.1"
+  Normal   Created    2m57s  kubelet, kube-master  Created container upgrade-ipam
+  Normal   Started    2m57s  kubelet, kube-master  Started container upgrade-ipam
+  Normal   Pulled     2m56s  kubelet, kube-master  Container image "calico/cni:v3.6.1" already present on machine
+  Normal   Started    2m56s  kubelet, kube-master  Started container install-cni
+  Normal   Created    2m56s  kubelet, kube-master  Created container install-cni
+  Normal   Pulling    2m55s  kubelet, kube-master  Pulling image "calico/node:v3.6.1"
+  Normal   Pulled     2m53s  kubelet, kube-master  Successfully pulled image "calico/node:v3.6.1"
+  Normal   Created    2m52s  kubelet, kube-master  Created container calico-node
+  Normal   Started    2m52s  kubelet, kube-master  Started container calico-node
+  Warning  Unhealthy  2m50s  kubelet, kube-master  Readiness probe failed: Threshold time for bird readiness check:  30s
+calico/node is not ready: BIRD is not ready: Error querying BIRD: unable to connect to BIRDv4 socket: dial unix /var/run/bird/bird.ctl: connect: no such file or directory
+
+
+Name:               coredns-fb8b8dccf-n9l6q
+Namespace:          kube-system
+Priority:           2000000000
+PriorityClassName:  system-cluster-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:31:25 +0000
+Labels:             k8s-app=kube-dns
+                    pod-template-hash=fb8b8dccf
+Annotations:        cni.projectcalico.org/podIP: 192.168.221.194/32
+Status:             Running
+IP:                 192.168.221.194
+Controlled By:      ReplicaSet/coredns-fb8b8dccf
+Containers:
+  coredns:
+    Container ID:  docker://4123d1485d9e12d73ceb5a1dd13411358c692698e761187fa7e80d212da8da18
+    Image:         k8s.gcr.io/coredns:1.3.1
+    Image ID:      docker-pullable://k8s.gcr.io/coredns@sha256:02382353821b12c21b062c59184e227e001079bb13ebd01f9d3270ba0fcbf1e4
+    Ports:         53/UDP, 53/TCP, 9153/TCP
+    Host Ports:    0/UDP, 0/TCP, 0/TCP
+    Args:
+      -conf
+      /etc/coredns/Corefile
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:31:26 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  170Mi
+    Requests:
+      cpu:        100m
+      memory:     70Mi
+    Liveness:     http-get http://:8080/health delay=60s timeout=5s period=10s #success=1 #failure=5
+    Readiness:    http-get http://:8080/health delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /etc/coredns from config-volume (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from coredns-token-65lt2 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      coredns
+    Optional:  false
+  coredns-token-65lt2:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  coredns-token-65lt2
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  beta.kubernetes.io/os=linux
+Tolerations:     CriticalAddonsOnly
+                 node-role.kubernetes.io/master:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason            Age                     From                  Message
+  ----     ------            ----                    ----                  -------
+  Warning  FailedScheduling  2m55s (x25 over 5m16s)  default-scheduler     0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Normal   Pulled            2m34s                   kubelet, kube-master  Container image "k8s.gcr.io/coredns:1.3.1" already present on machine
+  Normal   Created           2m34s                   kubelet, kube-master  Created container coredns
+  Normal   Started           2m34s                   kubelet, kube-master  Started container coredns
+
+
+Name:               coredns-fb8b8dccf-zjz94
+Namespace:          kube-system
+Priority:           2000000000
+PriorityClassName:  system-cluster-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:31:25 +0000
+Labels:             k8s-app=kube-dns
+                    pod-template-hash=fb8b8dccf
+Annotations:        cni.projectcalico.org/podIP: 192.168.221.195/32
+Status:             Running
+IP:                 192.168.221.195
+Controlled By:      ReplicaSet/coredns-fb8b8dccf
+Containers:
+  coredns:
+    Container ID:  docker://b4127eb620bf29790041d0094407fbb6a1d98bb34ac4dcf452a82f9afdbc49a6
+    Image:         k8s.gcr.io/coredns:1.3.1
+    Image ID:      docker-pullable://k8s.gcr.io/coredns@sha256:02382353821b12c21b062c59184e227e001079bb13ebd01f9d3270ba0fcbf1e4
+    Ports:         53/UDP, 53/TCP, 9153/TCP
+    Host Ports:    0/UDP, 0/TCP, 0/TCP
+    Args:
+      -conf
+      /etc/coredns/Corefile
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:31:27 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  170Mi
+    Requests:
+      cpu:        100m
+      memory:     70Mi
+    Liveness:     http-get http://:8080/health delay=60s timeout=5s period=10s #success=1 #failure=5
+    Readiness:    http-get http://:8080/health delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /etc/coredns from config-volume (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from coredns-token-65lt2 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      coredns
+    Optional:  false
+  coredns-token-65lt2:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  coredns-token-65lt2
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  beta.kubernetes.io/os=linux
+Tolerations:     CriticalAddonsOnly
+                 node-role.kubernetes.io/master:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason            Age                     From                  Message
+  ----     ------            ----                    ----                  -------
+  Warning  FailedScheduling  2m55s (x25 over 5m15s)  default-scheduler     0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Normal   Pulled            2m34s                   kubelet, kube-master  Container image "k8s.gcr.io/coredns:1.3.1" already present on machine
+  Normal   Created           2m34s                   kubelet, kube-master  Created container coredns
+  Normal   Started           2m33s                   kubelet, kube-master  Started container coredns
+
+
+Name:               etcd-kube-master
+Namespace:          kube-system
+Priority:           2000000000
+PriorityClassName:  system-cluster-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:28:16 +0000
+Labels:             component=etcd
+                    tier=control-plane
+Annotations:        kubernetes.io/config.hash: eae9ef0a70dd4eec94a27466c9abf36e
+                    kubernetes.io/config.mirror: eae9ef0a70dd4eec94a27466c9abf36e
+                    kubernetes.io/config.seen: 2019-04-02T17:28:15.644807727Z
+                    kubernetes.io/config.source: file
+Status:             Running
+IP:                 10.142.0.14
+Containers:
+  etcd:
+    Container ID:  docker://766b30b4c3ae75f0eefb907fd69be55b3156bbe2997ef8c6cf6a711b68558fc1
+    Image:         k8s.gcr.io/etcd:3.3.10
+    Image ID:      docker-pullable://k8s.gcr.io/etcd@sha256:17da501f5d2a675be46040422a27b7cc21b8a43895ac998b171db1c346f361f7
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      etcd
+      --advertise-client-urls=https://10.142.0.14:2379
+      --cert-file=/etc/kubernetes/pki/etcd/server.crt
+      --client-cert-auth=true
+      --data-dir=/var/lib/etcd
+      --initial-advertise-peer-urls=https://10.142.0.14:2380
+      --initial-cluster=kube-master=https://10.142.0.14:2380
+      --key-file=/etc/kubernetes/pki/etcd/server.key
+      --listen-client-urls=https://127.0.0.1:2379,https://10.142.0.14:2379
+      --listen-peer-urls=https://10.142.0.14:2380
+      --name=kube-master
+      --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+      --peer-client-cert-auth=true
+      --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+      --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      --snapshot-count=10000
+      --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:28:18 +0000
+    Ready:          True
+    Restart Count:  0
+    Liveness:       exec [/bin/sh -ec ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key get foo] delay=15s timeout=15s period=10s #success=1 #failure=8
+    Environment:    <none>
+    Mounts:
+      /etc/kubernetes/pki/etcd from etcd-certs (rw)
+      /var/lib/etcd from etcd-data (rw)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  etcd-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/pki/etcd
+    HostPathType:  DirectoryOrCreate
+  etcd-data:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/etcd
+    HostPathType:  DirectoryOrCreate
+QoS Class:         BestEffort
+Node-Selectors:    <none>
+Tolerations:       :NoExecute
+Events:
+  Type    Reason   Age    From                  Message
+  ----    ------   ----   ----                  -------
+  Normal  Pulled   5m43s  kubelet, kube-master  Container image "k8s.gcr.io/etcd:3.3.10" already present on machine
+  Normal  Created  5m42s  kubelet, kube-master  Created container etcd
+  Normal  Started  5m42s  kubelet, kube-master  Started container etcd
+
+
+Name:               kube-apiserver-kube-master
+Namespace:          kube-system
+Priority:           2000000000
+PriorityClassName:  system-cluster-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:28:16 +0000
+Labels:             component=kube-apiserver
+                    tier=control-plane
+Annotations:        kubernetes.io/config.hash: 9b3bed0621a1fe21aa152a169de61575
+                    kubernetes.io/config.mirror: 9b3bed0621a1fe21aa152a169de61575
+                    kubernetes.io/config.seen: 2019-04-02T17:28:15.644814889Z
+                    kubernetes.io/config.source: file
+Status:             Running
+IP:                 10.142.0.14
+Containers:
+  kube-apiserver:
+    Container ID:  docker://2975501c8bb6e117e77d9c4348a2d3a9f8fdfe566083245493588f239fe70448
+    Image:         k8s.gcr.io/kube-apiserver:v1.14.0
+    Image ID:      docker-pullable://k8s.gcr.io/kube-apiserver@sha256:5a5183b427e2e4226a3a7411064ee1b9dae5199513f2d7569b5e264a7be0fd06
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-apiserver
+      --advertise-address=10.142.0.14
+      --allow-privileged=true
+      --authorization-mode=Node,RBAC
+      --client-ca-file=/etc/kubernetes/pki/ca.crt
+      --enable-admission-plugins=NodeRestriction
+      --enable-bootstrap-token-auth=true
+      --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+      --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+      --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+      --etcd-servers=https://127.0.0.1:2379
+      --insecure-port=0
+      --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
+      --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
+      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
+      --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+      --requestheader-allowed-names=front-proxy-client
+      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+      --requestheader-extra-headers-prefix=X-Remote-Extra-
+      --requestheader-group-headers=X-Remote-Group
+      --requestheader-username-headers=X-Remote-User
+      --secure-port=6443
+      --service-account-key-file=/etc/kubernetes/pki/sa.pub
+      --service-cluster-ip-range=10.96.0.0/12
+      --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+      --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:28:18 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        250m
+    Liveness:     http-get https://10.142.0.14:6443/healthz delay=15s timeout=15s period=10s #success=1 #failure=8
+    Environment:  <none>
+    Mounts:
+      /etc/ca-certificates from etc-ca-certificates (ro)
+      /etc/kubernetes/pki from k8s-certs (ro)
+      /etc/ssl/certs from ca-certs (ro)
+      /usr/local/share/ca-certificates from usr-local-share-ca-certificates (ro)
+      /usr/share/ca-certificates from usr-share-ca-certificates (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  ca-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ssl/certs
+    HostPathType:  DirectoryOrCreate
+  etc-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  k8s-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/pki
+    HostPathType:  DirectoryOrCreate
+  usr-local-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/local/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  usr-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute
+Events:
+  Type    Reason   Age    From                  Message
+  ----    ------   ----   ----                  -------
+  Normal  Pulled   5m43s  kubelet, kube-master  Container image "k8s.gcr.io/kube-apiserver:v1.14.0" already present on machine
+  Normal  Created  5m43s  kubelet, kube-master  Created container kube-apiserver
+  Normal  Started  5m42s  kubelet, kube-master  Started container kube-apiserver
+
+
+Name:               kube-controller-manager-kube-master
+Namespace:          kube-system
+Priority:           2000000000
+PriorityClassName:  system-cluster-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:28:16 +0000
+Labels:             component=kube-controller-manager
+                    tier=control-plane
+Annotations:        kubernetes.io/config.hash: 6576afefa9be45c71e45afa4f63c9a53
+                    kubernetes.io/config.mirror: 6576afefa9be45c71e45afa4f63c9a53
+                    kubernetes.io/config.seen: 2019-04-02T17:28:15.644818828Z
+                    kubernetes.io/config.source: file
+Status:             Running
+IP:                 10.142.0.14
+Containers:
+  kube-controller-manager:
+    Container ID:  docker://d1ebe52c7be1dfda1f429665fa6de8805dba9f8585c773bbf4069fd02b1bcda1
+    Image:         k8s.gcr.io/kube-controller-manager:v1.14.0
+    Image ID:      docker-pullable://k8s.gcr.io/kube-controller-manager@sha256:433e56decf088553bdbe055610712dc1192453b2265376eea9af4aab9f574b54
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-controller-manager
+      --allocate-node-cidrs=true
+      --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf
+      --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf
+      --bind-address=127.0.0.1
+      --client-ca-file=/etc/kubernetes/pki/ca.crt
+      --cluster-cidr=192.168.0.0/16
+      --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+      --cluster-signing-key-file=/etc/kubernetes/pki/ca.key
+      --controllers=*,bootstrapsigner,tokencleaner
+      --kubeconfig=/etc/kubernetes/controller-manager.conf
+      --leader-elect=true
+      --node-cidr-mask-size=24
+      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+      --root-ca-file=/etc/kubernetes/pki/ca.crt
+      --service-account-private-key-file=/etc/kubernetes/pki/sa.key
+      --use-service-account-credentials=true
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:28:18 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        200m
+    Liveness:     http-get http://127.0.0.1:10252/healthz delay=15s timeout=15s period=10s #success=1 #failure=8
+    Environment:  <none>
+    Mounts:
+      /etc/ca-certificates from etc-ca-certificates (ro)
+      /etc/kubernetes/controller-manager.conf from kubeconfig (ro)
+      /etc/kubernetes/pki from k8s-certs (ro)
+      /etc/ssl/certs from ca-certs (ro)
+      /usr/libexec/kubernetes/kubelet-plugins/volume/exec from flexvolume-dir (rw)
+      /usr/local/share/ca-certificates from usr-local-share-ca-certificates (ro)
+      /usr/share/ca-certificates from usr-share-ca-certificates (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  ca-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ssl/certs
+    HostPathType:  DirectoryOrCreate
+  etc-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  flexvolume-dir:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+    HostPathType:  DirectoryOrCreate
+  k8s-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/pki
+    HostPathType:  DirectoryOrCreate
+  kubeconfig:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/controller-manager.conf
+    HostPathType:  FileOrCreate
+  usr-local-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/local/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  usr-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute
+Events:
+  Type    Reason   Age    From                  Message
+  ----    ------   ----   ----                  -------
+  Normal  Pulled   5m43s  kubelet, kube-master  Container image "k8s.gcr.io/kube-controller-manager:v1.14.0" already present on machine
+  Normal  Created  5m43s  kubelet, kube-master  Created container kube-controller-manager
+  Normal  Started  5m42s  kubelet, kube-master  Started container kube-controller-manager
+
+
+Name:               kube-proxy-n8sx6
+Namespace:          kube-system
+Priority:           2000001000
+PriorityClassName:  system-node-critical
+Node:               kube-slave/10.142.0.15
+Start Time:         Tue, 02 Apr 2019 17:31:58 +0000
+Labels:             controller-revision-hash=b7775b676
+                    k8s-app=kube-proxy
+                    pod-template-generation=1
+Annotations:        <none>
+Status:             Running
+IP:                 10.142.0.15
+Controlled By:      DaemonSet/kube-proxy
+Containers:
+  kube-proxy:
+    Container ID:  docker://d767bdd975e927d9e1305f59630bd1326f89c6f328f8e68740f39b083ad6c08e
+    Image:         k8s.gcr.io/kube-proxy:v1.14.0
+    Image ID:      docker-pullable://k8s.gcr.io/kube-proxy@sha256:bd414b838473ee9b704ac2c5756cc3d1e536df7daaac26058909a4bdd42a1e89
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /usr/local/bin/kube-proxy
+      --config=/var/lib/kube-proxy/config.conf
+      --hostname-override=$(NODE_NAME)
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:32:03 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      NODE_NAME:   (v1:spec.nodeName)
+    Mounts:
+      /lib/modules from lib-modules (ro)
+      /run/xtables.lock from xtables-lock (rw)
+      /var/lib/kube-proxy from kube-proxy (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-proxy-token-lq8m7 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-proxy:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      kube-proxy
+    Optional:  false
+  xtables-lock:
+    Type:          HostPath (bare host directory volume)
+    Path:          /run/xtables.lock
+    HostPathType:  FileOrCreate
+  lib-modules:
+    Type:          HostPath (bare host directory volume)
+    Path:          /lib/modules
+    HostPathType:  
+  kube-proxy-token-lq8m7:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  kube-proxy-token-lq8m7
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     
+                 CriticalAddonsOnly
+                 node.kubernetes.io/disk-pressure:NoSchedule
+                 node.kubernetes.io/memory-pressure:NoSchedule
+                 node.kubernetes.io/network-unavailable:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute
+                 node.kubernetes.io/pid-pressure:NoSchedule
+                 node.kubernetes.io/unreachable:NoExecute
+                 node.kubernetes.io/unschedulable:NoSchedule
+Events:
+  Type    Reason     Age   From                 Message
+  ----    ------     ----  ----                 -------
+  Normal  Scheduled  2m2s  default-scheduler    Successfully assigned kube-system/kube-proxy-n8sx6 to kube-slave
+  Normal  Pulling    2m1s  kubelet, kube-slave  Pulling image "k8s.gcr.io/kube-proxy:v1.14.0"
+  Normal  Pulled     118s  kubelet, kube-slave  Successfully pulled image "k8s.gcr.io/kube-proxy:v1.14.0"
+  Normal  Created    118s  kubelet, kube-slave  Created container kube-proxy
+  Normal  Started    117s  kubelet, kube-slave  Started container kube-proxy
+
+
+Name:               kube-proxy-wrgbf
+Namespace:          kube-system
+Priority:           2000001000
+PriorityClassName:  system-node-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:28:44 +0000
+Labels:             controller-revision-hash=b7775b676
+                    k8s-app=kube-proxy
+                    pod-template-generation=1
+Annotations:        <none>
+Status:             Running
+IP:                 10.142.0.14
+Controlled By:      DaemonSet/kube-proxy
+Containers:
+  kube-proxy:
+    Container ID:  docker://53831d76bf2b47bea50c6b08c59c51d6f66634283c705e4d93e5282300f7d1cf
+    Image:         k8s.gcr.io/kube-proxy:v1.14.0
+    Image ID:      docker-pullable://k8s.gcr.io/kube-proxy@sha256:bd414b838473ee9b704ac2c5756cc3d1e536df7daaac26058909a4bdd42a1e89
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /usr/local/bin/kube-proxy
+      --config=/var/lib/kube-proxy/config.conf
+      --hostname-override=$(NODE_NAME)
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:28:45 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      NODE_NAME:   (v1:spec.nodeName)
+    Mounts:
+      /lib/modules from lib-modules (ro)
+      /run/xtables.lock from xtables-lock (rw)
+      /var/lib/kube-proxy from kube-proxy (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-proxy-token-lq8m7 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-proxy:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      kube-proxy
+    Optional:  false
+  xtables-lock:
+    Type:          HostPath (bare host directory volume)
+    Path:          /run/xtables.lock
+    HostPathType:  FileOrCreate
+  lib-modules:
+    Type:          HostPath (bare host directory volume)
+    Path:          /lib/modules
+    HostPathType:  
+  kube-proxy-token-lq8m7:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  kube-proxy-token-lq8m7
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     
+                 CriticalAddonsOnly
+                 node.kubernetes.io/disk-pressure:NoSchedule
+                 node.kubernetes.io/memory-pressure:NoSchedule
+                 node.kubernetes.io/network-unavailable:NoSchedule
+                 node.kubernetes.io/not-ready:NoExecute
+                 node.kubernetes.io/pid-pressure:NoSchedule
+                 node.kubernetes.io/unreachable:NoExecute
+                 node.kubernetes.io/unschedulable:NoSchedule
+Events:
+  Type    Reason     Age    From                  Message
+  ----    ------     ----   ----                  -------
+  Normal  Scheduled  5m16s  default-scheduler     Successfully assigned kube-system/kube-proxy-wrgbf to kube-master
+  Normal  Pulled     5m15s  kubelet, kube-master  Container image "k8s.gcr.io/kube-proxy:v1.14.0" already present on machine
+  Normal  Created    5m15s  kubelet, kube-master  Created container kube-proxy
+  Normal  Started    5m15s  kubelet, kube-master  Started container kube-proxy
+
+
+Name:               kube-scheduler-kube-master
+Namespace:          kube-system
+Priority:           2000000000
+PriorityClassName:  system-cluster-critical
+Node:               kube-master/10.142.0.14
+Start Time:         Tue, 02 Apr 2019 17:28:16 +0000
+Labels:             component=kube-scheduler
+                    tier=control-plane
+Annotations:        kubernetes.io/config.hash: 58272442e226c838b193bbba4c44091e
+                    kubernetes.io/config.mirror: 58272442e226c838b193bbba4c44091e
+                    kubernetes.io/config.seen: 2019-04-02T17:28:15.644820358Z
+                    kubernetes.io/config.source: file
+Status:             Running
+IP:                 10.142.0.14
+Containers:
+  kube-scheduler:
+    Container ID:  docker://218adb90996ff84e4d876963cf5a5a22443122373e98d1822e3a77460bb8e026
+    Image:         k8s.gcr.io/kube-scheduler:v1.14.0
+    Image ID:      docker-pullable://k8s.gcr.io/kube-scheduler@sha256:cb35b2580cd0d97984106a81dcd0f1d9f63d774e18eeae40caef88d217f36b82
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-scheduler
+      --bind-address=127.0.0.1
+      --kubeconfig=/etc/kubernetes/scheduler.conf
+      --leader-elect=true
+    State:          Running
+      Started:      Tue, 02 Apr 2019 17:28:18 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        100m
+    Liveness:     http-get http://127.0.0.1:10251/healthz delay=15s timeout=15s period=10s #success=1 #failure=8
+    Environment:  <none>
+    Mounts:
+      /etc/kubernetes/scheduler.conf from kubeconfig (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kubeconfig:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/scheduler.conf
+    HostPathType:  FileOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute
+Events:
+  Type    Reason   Age    From                  Message
+  ----    ------   ----   ----                  -------
+  Normal  Pulled   5m43s  kubelet, kube-master  Container image "k8s.gcr.io/kube-scheduler:v1.14.0" already present on machine
+  Normal  Created  5m43s  kubelet, kube-master  Created container kube-scheduler
+  Normal  Started  5m42s  kubelet, kube-master  Started container kube-scheduler
